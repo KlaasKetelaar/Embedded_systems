@@ -63,35 +63,35 @@ void delay_ms(uint16_t ms){
 }
 
 void W2_Assignment5(){
-    //HALLO KLAAS!!!!
     P2->DIR = LED2_RED | LED2_BLUE;
+    __disable_irq();
     TIMER_A0->CTL =  0x2D2; // 0b001011010010 this config setsup the clock config
     TIMER_A0->EX0 =  0x07; // 0b0111 sets up the divider
     TIMER_A0->CCR[0] = 46975 - 1;
-//    TIMER_A0->CCTL[0] |= 1 << 4; //Enables the CCIFG flag by enabling the CCIE bit on the CCTL register of TIMER_A0
+    TIMER_A0->CCTL[0] |= 1 << 4; //Enables the CCIFG flag by enabling the CCIE bit on the CCTL register of TIMER_A0
 
 
     TIMER_A1->CTL =  0x2D2; // 0b001011010010 this config setsup the clock config
     TIMER_A1->EX0 =  0x07; // 0b0111 sets up the divider
     TIMER_A1->CCR[0] = 46975 - 1;
-//    TIMER_A1->CCTL[0] |= 1 << 4; //Enables the CCIFG flag by enabling the CCIE bit on the CCTL register of TIMER_A1
+    TIMER_A1->CCTL[0] |= 1 << 4; //Enables the CCIFG flag by enabling the CCIE bit on the CCTL register of TIMER_A1
 
     NVIC_SetPriority(TA0_0_IRQn, 1);
     NVIC_SetPriority(TA1_0_IRQn, 2);
 
     NVIC_EnableIRQ(TA0_0_IRQn);
     NVIC_EnableIRQ(TA1_0_IRQn);
-
+    __enable_irq();
 }
 
-void TA0_0IRQHandler(){
+void TA0_0_IRQHandler(){
 //    TIMER_A0->CTL =~TIMER_A_CTL_IFG; //interrupt flag is cleared for P1.1
     TIMER_A0->CCTL[0] &=~1;
     P2->OUT ^=LED2_BLUE; // Toggle RED LED
     delay_ms(2000);
 }
 //for assignment 5
-void TA1_0IRQHandler(){
+void TA1_0_IRQHandler(){
 //    TIMER_A1->CTL =~TIMER_A_CTL_IFG;//interrupt flag is cleared for P1.1
     TIMER_A1->CCTL[0] &=~1;
     P2->OUT ^=LED2_RED; // Toggle RED LED
@@ -108,7 +108,13 @@ void TA1_0IRQHandler(){
 void main(void)
 {
     WDT_A->CTL = WDT_A_CTL_PW | WDT_A_CTL_HOLD;     // stop watchdog timer
+
 //    W2_Assignment3();
+
 //    W2_IntroFunc();
     W2_Assignment5();
+
+    while(1){
+
+    }
 }
