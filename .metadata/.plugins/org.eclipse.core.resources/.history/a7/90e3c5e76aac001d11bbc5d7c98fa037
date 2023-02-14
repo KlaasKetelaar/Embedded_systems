@@ -2,9 +2,9 @@
 #define LED2_RED 1
 #define LED2_BLUE 4
 #define S1 BIT1
-#define delay_ms(t) __delay_cycles(2400*t)
+
 int count = 0;
-//void delay_ms(uint16_t ms);
+void delay_ms(uint16_t ms);
 
 //for assignment 3
 //void TA1_0_IRQHandler(){
@@ -56,11 +56,11 @@ void PORT1_IRQHandler(void){
     P1->IFG &=~S1; //interrupt flag is cleared for P1.1
 }
 
-//void delay_ms(uint16_t ms){
-//    uint16_t delay;
-//    volatile uint32_t i;
-//    for (delay = ms; delay >0 ; delay--);
-//}
+void delay_ms(uint16_t ms){
+    uint16_t delay;
+    volatile uint32_t i;
+    for (delay = ms; delay >0 ; delay--);
+}
 
 void W2_Assignment5(){
     __disable_irq();
@@ -90,14 +90,14 @@ void TA0_0_IRQHandler(){
     TIMER_A0->CTL =~TIMER_A_CTL_IFG; //interrupt flag is cleared for P1.1
 //    TIMER_A0->CCTL[0] &=~1;
     P2->OUT ^=LED2_BLUE; // Toggle RED LED
-    P2->OUT &=~LED2_RED;
+//    P2->OUT &=~LED2_RED;
     delay_ms(2000);
 }
 //for assignment 5
 void TA1_0_IRQHandler(){
     TIMER_A1->CTL =~TIMER_A_CTL_IFG;//interrupt flag is cleared for P1.1
 //    TIMER_A1->CCTL[0] &=~1;
-    P2->OUT &=~LED2_BLUE;
+//    P2->OUT &=~LED2_BLUE;
     P2->OUT ^=LED2_RED; // Toggle RED LED
     delay_ms(2000);
 }

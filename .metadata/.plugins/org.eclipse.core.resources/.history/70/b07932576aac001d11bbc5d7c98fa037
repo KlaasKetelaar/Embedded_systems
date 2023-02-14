@@ -1,10 +1,10 @@
 #include "msp.h"
-#define LED2_RED 1
-#define LED2_BLUE 4
+#define LED2_RED BIT0
+#define LED2_BLUE BIT4
 #define S1 BIT1
-#define delay_ms(t) __delay_cycles(2400*t)
+
 int count = 0;
-//void delay_ms(uint16_t ms);
+void delay_ms(uint16_t ms);
 
 //for assignment 3
 //void TA1_0_IRQHandler(){
@@ -56,11 +56,11 @@ void PORT1_IRQHandler(void){
     P1->IFG &=~S1; //interrupt flag is cleared for P1.1
 }
 
-//void delay_ms(uint16_t ms){
-//    uint16_t delay;
-//    volatile uint32_t i;
-//    for (delay = ms; delay >0 ; delay--);
-//}
+void delay_ms(uint16_t ms){
+    uint16_t delay;
+    volatile uint32_t i;
+    for (delay = ms; delay >0 ; delay--);
+}
 
 void W2_Assignment5(){
     __disable_irq();

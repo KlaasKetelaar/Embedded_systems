@@ -79,7 +79,7 @@ void W2_Assignment5(){
     TIMER_A1->CCTL[0] |= 1 << 4; //Enables the CCIFG flag by enabling the CCIE bit on the CCTL register of TIMER_A1
 
     NVIC_SetPriority(TA0_0_IRQn, 1);
-    NVIC_SetPriority(TA1_0_IRQn, 1);
+    NVIC_SetPriority(TA1_0_IRQn, 2);
 
     NVIC_EnableIRQ(TA0_0_IRQn);
     NVIC_EnableIRQ(TA1_0_IRQn);

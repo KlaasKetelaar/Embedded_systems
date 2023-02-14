@@ -1,10 +1,10 @@
 #include "msp.h"
-#define LED2_RED 1
-#define LED2_BLUE 4
+#define LED2_RED BIT0
+#define LED2_BLUE BIT4
 #define S1 BIT1
-#define delay_ms(t) __delay_cycles(2400*t)
+
 int count = 0;
-//void delay_ms(uint16_t ms);
+void delay_ms(uint16_t ms);
 
 //for assignment 3
 //void TA1_0_IRQHandler(){
@@ -56,17 +56,15 @@ void PORT1_IRQHandler(void){
     P1->IFG &=~S1; //interrupt flag is cleared for P1.1
 }
 
-//void delay_ms(uint16_t ms){
-//    uint16_t delay;
-//    volatile uint32_t i;
-//    for (delay = ms; delay >0 ; delay--);
-//}
+void delay_ms(uint16_t ms){
+    uint16_t delay;
+    volatile uint32_t i;
+    for (delay = ms; delay >0 ; delay--);
+}
 
 void W2_Assignment5(){
-    __disable_irq();
-    P2->SEL0&= ~(LED2_RED & LED2_BLUE);
-    P2->SEL1&= ~(LED2_RED & LED2_BLUE);
     P2->DIR = LED2_RED | LED2_BLUE;
+    __disable_irq();
     TIMER_A0->CTL =  0x2D2; // 0b001011010010 this config setsup the clock config
     TIMER_A0->EX0 =  0x07; // 0b0111 sets up the divider
     TIMER_A0->CCR[0] = 46975 - 1;
@@ -79,7 +77,7 @@ void W2_Assignment5(){
     TIMER_A1->CCTL[0] |= 1 << 4; //Enables the CCIFG flag by enabling the CCIE bit on the CCTL register of TIMER_A1
 
     NVIC_SetPriority(TA0_0_IRQn, 1);
-    NVIC_SetPriority(TA1_0_IRQn, 1);
+    NVIC_SetPriority(TA1_0_IRQn, 2);
 
     NVIC_EnableIRQ(TA0_0_IRQn);
     NVIC_EnableIRQ(TA1_0_IRQn);
@@ -87,17 +85,15 @@ void W2_Assignment5(){
 }
 
 void TA0_0_IRQHandler(){
-    TIMER_A0->CTL =~TIMER_A_CTL_IFG; //interrupt flag is cleared for P1.1
-//    TIMER_A0->CCTL[0] &=~1;
+//    TIMER_A0->CTL =~TIMER_A_CTL_IFG; //interrupt flag is cleared for P1.1
+    TIMER_A0->CCTL[0] &=~1;
     P2->OUT ^=LED2_BLUE; // Toggle RED LED
-    P2->OUT &=~LED2_RED;
     delay_ms(2000);
 }
 //for assignment 5
 void TA1_0_IRQHandler(){
-    TIMER_A1->CTL =~TIMER_A_CTL_IFG;//interrupt flag is cleared for P1.1
-//    TIMER_A1->CCTL[0] &=~1;
-    P2->OUT &=~LED2_BLUE;
+//    TIMER_A1->CTL =~TIMER_A_CTL_IFG;//interrupt flag is cleared for P1.1
+    TIMER_A1->CCTL[0] &=~1;
     P2->OUT ^=LED2_RED; // Toggle RED LED
     delay_ms(2000);
 }
