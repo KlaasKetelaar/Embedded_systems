@@ -63,7 +63,6 @@ void delay_ms(uint16_t ms){
 }
 
 void W2_Assignment5(){
-    //HALLO KLAAS!!!!
     P2->DIR = LED2_RED | LED2_BLUE;
     TIMER_A0->CTL =  0x2D2; // 0b001011010010 this config setsup the clock config
     TIMER_A0->EX0 =  0x07; // 0b0111 sets up the divider
