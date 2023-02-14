@@ -1,0 +1,8 @@
+
+**** Build of configuration Debug for project TINLES01_W2 ****
+
+"C:\\ti\\ccs1220\\ccs\\utils\\bin\\gmake" -k -j 16 all -O 
+ 
+gmake[1]: 'TINLES01_W2.out' is up to date.
+
+**** Build Finished ****

@@ -1,0 +1,28 @@
+#include "msp.h"
+
+
+/**
+ * main.c
+ */
+void main(void)
+{
+	WDT_A->CTL = WDT_A_CTL_PW | WDT_A_CTL_HOLD;		// stop watchdog timer
+	__disable_irq();
+	P5->SEL0 &=~0x01;
+	P5->SEL1 &=~0x01;
+	P5->DIR |= 0x01;
+	TIMER_A1->CTL =  0x2D2; // 0b001011010010 this config setsup the clock config
+    TIMER_A1->EX0 =  0x07; // 0b0111 sets up the divider
+    TIMER_A1_>CCR[0] = 46975 - 1;
+    NVIC->IP[10] = 0x60;
+    NVIC->ISER[0] = 1<<10;
+    __enable_irq();
+    while(true){
+
+    }
+}
+
+void TA1_0_IRQHandler(){
+    TIMER_A1->CTL[0] &=~1;
+    P5->OUT ^=1;
+}
