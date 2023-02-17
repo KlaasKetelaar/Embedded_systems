@@ -1,5 +1,5 @@
 
-#include <ti/devices/msp432p4xx/driverlib/driverlib.h>
+#include "msp.h"
 
 #define LED2_BLUE 4
 #define LED2_RED 1
