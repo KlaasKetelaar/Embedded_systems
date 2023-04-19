@@ -1,7 +1,7 @@
 ******************************************************************************
                   TI ARM Linker PC v20.2.7                     
 ******************************************************************************
->> Linked Tue Feb  7 15:08:36 2023
+>> Linked Fri Feb 24 10:38:56 2023
 
 OUTPUT FILE NAME:   <blinkled_msp432p401r_MSP_EXP432P401R_nortos_ccs.out>
 ENTRY POINT SYMBOL: "_c_int00_noinit_noargs"  address: 00000205

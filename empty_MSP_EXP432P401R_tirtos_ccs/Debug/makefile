@@ -6,12 +6,11 @@ SHELL = cmd.exe
 
 CG_TOOL_ROOT := C:/ti/ccs1220/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS
 
-GEN_OPTS__FLAG := --cmd_file="C:/Users/rensv/workspace_v12/tirtos_builds_MSP_EXP432P401R_release_ccs/Debug/configPkg/compiler.opt" 
-GEN_CMDS__FLAG := -l"C:/Users/rensv/workspace_v12/tirtos_builds_MSP_EXP432P401R_release_ccs/Debug/configPkg/linker.cmd" 
+GEN_OPTS__FLAG := 
+GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
 "./empty.obj" \
-"./syscfg/ti_drivers_config.obj" \
 "./main_tirtos.obj" \
 "../MSP_EXP432P401R_TIRTOS.cmd" \
 -l"ti/display/lib/display.aem4f" \
@@ -139,29 +138,25 @@ EXE_OUTPUTS__QUOTED += \
 all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@$(MAKE) --no-print-directory -Onone "empty_MSP_EXP432P401R_tirtos_ccs.out"
 
-dependents:
-	-cd C:/Users/rensv/workspace_v12/tirtos_builds_MSP_EXP432P401R_release_ccs/Debug && $(MAKE) all
-
 # Tool invocations
-empty_MSP_EXP432P401R_tirtos_ccs.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS) C:/Users/rensv/workspace_v12/tirtos_builds_MSP_EXP432P401R_release_ccs/Debug/tirtos_builds_MSP_EXP432P401R_release_ccs.lib
+empty_MSP_EXP432P401R_tirtos_ccs.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: Arm Linker'
-	"C:/ti/ccs1220/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --advice:power=none -g --diag_warning=225 --diag_warning=255 --diag_wrap=off --display_error_number --gen_func_subsections=on -z -m"empty_MSP_EXP432P401R_tirtos_ccs.map" -i"C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source" -i"C:/ti/simplelink_msp432p4_sdk_3_40_01_02/kernel/tirtos/packages" -i"C:/ti/ccs1220/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" --diag_wrap=off --display_error_number --warn_sections --xml_link_info="empty_MSP_EXP432P401R_tirtos_ccs_linkInfo.xml" --rom_model -o "empty_MSP_EXP432P401R_tirtos_ccs.out" $(ORDERED_OBJS)
+	"C:/ti/ccs1220/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --advice:power=none -g --diag_warning=225 --diag_warning=255 --diag_wrap=off --display_error_number --gen_func_subsections=on -z -m"empty_MSP_EXP432P401R_tirtos_ccs.map" -i"/source" -i"/kernel/tirtos/packages" -i"C:/ti/ccs1220/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" --diag_wrap=off --display_error_number --warn_sections --xml_link_info="empty_MSP_EXP432P401R_tirtos_ccs_linkInfo.xml" --rom_model -o "empty_MSP_EXP432P401R_tirtos_ccs.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(GEN_MISC_FILES__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "empty.obj" "syscfg\ti_drivers_config.obj" "main_tirtos.obj" 
-	-$(RM) "empty.d" "syscfg\ti_drivers_config.d" "main_tirtos.d" 
+	-$(RM) $(GEN_MISC_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
+	-$(RM) "empty.obj" "main_tirtos.obj" 
+	-$(RM) "empty.d" "main_tirtos.d" 
 	-$(RMDIR) $(GEN_MISC_DIRS__QUOTED)
 	-@echo 'Finished clean'
 	-@echo ' '
 
 .PHONY: all clean dependents
 .SECONDARY:
-C:/Users/rensv/workspace_v12/tirtos_builds_MSP_EXP432P401R_release_ccs/Debug/tirtos_builds_MSP_EXP432P401R_release_ccs.lib:
 
 -include ../makefile.targets
 
